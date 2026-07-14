@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <!-- WORK 01 — Northline (fintech dashboard) placeholder. Replace with real screenshot. -->
+  <rect width="1200" height="750" fill="#070c18"/>
+  <rect width="1200" height="750" fill="url(#nl-glow)"/>
+  <defs>
+    <radialGradient id="nl-glow" cx="0.22" cy="0.1" r="0.9">
+      <stop offset="0" stop-color="#4da2ff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#4da2ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nl-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4da2ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4da2ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sidebar -->
+  <rect x="0" y="0" width="220" height="750" fill="#0a1120"/>
+  <rect x="32" y="40" width="120" height="16" rx="4" fill="#4da2ff"/>
+  <g fill="#ffffff" opacity="0.14">
+    <rect x="32" y="110" width="156" height="12" rx="6"/>
+    <rect x="32" y="150" width="130" height="12" rx="6"/>
+    <rect x="32" y="190" width="146" height="12" rx="6"/>
+    <rect x="32" y="230" width="110" height="12" rx="6"/>
+  </g>
+  <rect x="24" y="102" width="180" height="28" rx="6" fill="#4da2ff" opacity="0.16"/>
+
+  <!-- top bar -->
+  <rect x="260" y="40" width="320" height="20" rx="6" fill="#ffffff" opacity="0.85"/>
+  <rect x="260" y="72" width="200" height="12" rx="6" fill="#ffffff" opacity="0.25"/>
+  <rect x="1020" y="40" width="140" height="36" rx="8" fill="#4da2ff"/>
+
+  <!-- stat cards -->
+  <g>
+    <rect x="260" y="120" width="280" height="120" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+    <rect x="288" y="148" width="90" height="10" rx="5" fill="#ffffff" opacity="0.3"/>
+    <rect x="288" y="176" width="150" height="22" rx="6" fill="#ffffff" opacity="0.85"/>
+    <rect x="570" y="120" width="280" height="120" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+    <rect x="598" y="148" width="90" height="10" rx="5" fill="#ffffff" opacity="0.3"/>
+    <rect x="598" y="176" width="120" height="22" rx="6" fill="#62adff" opacity="0.9"/>
+    <rect x="880" y="120" width="280" height="120" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+    <rect x="908" y="148" width="90" height="10" rx="5" fill="#ffffff" opacity="0.3"/>
+    <rect x="908" y="176" width="140" height="22" rx="6" fill="#ffffff" opacity="0.85"/>
+  </g>
+
+  <!-- chart panel -->
+  <rect x="260" y="272" width="590" height="330" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+  <g stroke="#ffffff" stroke-opacity="0.06">
+    <line x1="292" y1="360" x2="818" y2="360"/>
+    <line x1="292" y1="430" x2="818" y2="430"/>
+    <line x1="292" y1="500" x2="818" y2="500"/>
+    <line x1="292" y1="560" x2="818" y2="560"/>
+  </g>
+  <path d="M292 540 L360 500 L430 516 L500 440 L570 464 L640 380 L710 402 L780 330 L818 344 V570 H292 Z" fill="url(#nl-area)"/>
+  <path d="M292 540 L360 500 L430 516 L500 440 L570 464 L640 380 L710 402 L780 330 L818 344" stroke="#4da2ff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="780" cy="330" r="6" fill="#4da2ff"/>
+  <circle cx="780" cy="330" r="12" fill="#4da2ff" opacity="0.25"/>
+
+  <!-- list panel -->
+  <rect x="880" y="272" width="280" height="330" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+  <g fill="#ffffff" opacity="0.2">
+    <rect x="908" y="308" width="180" height="12" rx="6"/>
+    <rect x="908" y="356" width="220" height="12" rx="6"/>
+    <rect x="908" y="404" width="160" height="12" rx="6"/>
+    <rect x="908" y="452" width="200" height="12" rx="6"/>
+    <rect x="908" y="500" width="140" height="12" rx="6"/>
+  </g>
+  <g fill="#4da2ff" opacity="0.7">
+    <circle cx="1132" cy="314" r="5"/>
+    <circle cx="1132" cy="362" r="5"/>
+    <circle cx="1132" cy="410" r="5"/>
+    <circle cx="1132" cy="458" r="5"/>
+    <circle cx="1132" cy="506" r="5"/>
+  </g>
+
+  <!-- bottom row -->
+  <rect x="260" y="634" width="900" height="76" rx="12" fill="#0d1526" stroke="#1c2a45"/>
+  <rect x="292" y="662" width="240" height="14" rx="7" fill="#ffffff" opacity="0.3"/>
+  <rect x="1020" y="656" width="108" height="30" rx="8" fill="#4da2ff" opacity="0.85"/>
+</svg>

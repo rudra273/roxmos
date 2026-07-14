@@ -1,9 +1,11 @@
 import About from "@/components/About";
 import Approach from "@/components/Approach";
+import Contact from "@/components/Contact";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Products from "@/components/Products";
 import Services from "@/components/Services";
+import Work from "@/components/Work";
 
 export default function Home() {
   return (
@@ -23,14 +25,14 @@ export default function Home() {
       {/* Approach — white */}
       <Approach />
 
-      {/* Work — dark / grey */}
-      <section id="work">
-        <div className="h-[50vh] bg-paper" />
-        <div className="h-[50vh] bg-[#e8ebf1]" />
-      </section>
+      {/* Work — dark, pinned client-work showcase.
+          Its scroll track ends with one extra viewport of "hold" — Contact
+          pulls itself up (-mt-[100vh]) and slides over the pinned stage.
+          Keep Contact directly after Work. */}
+      <Work />
 
-      {/* Contact — dark */}
-      <section id="contact" className="min-h-screen bg-ink" />
+      {/* Contact — dark, rises over Work */}
+      <Contact />
 
       {/* Footer — dark */}
       <footer className="min-h-[40vh] bg-ink" />
