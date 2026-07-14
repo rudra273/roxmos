@@ -38,7 +38,7 @@ export default function Navbar() {
       <a
         href="#"
         aria-label="ROXMOS home"
-        className="fixed left-4 top-5 z-50 flex h-9 items-center rounded-md bg-[rgba(30,32,40,0.55)] px-4 font-display text-base font-bold tracking-tight backdrop-blur-[44px]"
+        className="fixed left-4 top-5 z-50 flex h-9 items-center rounded-md bg-[rgba(30,32,40,0.4)] px-4 font-display text-base font-bold tracking-tight backdrop-blur-[44px]"
       >
         <span className="text-accent">ROXMOS</span>
       </a>
@@ -58,7 +58,7 @@ export default function Navbar() {
           onMouseLeave={() => setServicesOpen(false)}
           animate={{ height: servicesOpen ? "auto" : 50 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="pointer-events-auto w-fit max-w-[calc(100vw-3rem)] overflow-hidden rounded-[16px] bg-[rgba(30,32,40,0.55)] p-2 backdrop-blur-[44px]"
+          className="pointer-events-auto w-fit max-w-[calc(100vw-3rem)] overflow-hidden rounded-[16px] bg-[rgba(30,32,40,0.4)] p-2 backdrop-blur-[44px]"
         >
           {/* Link row */}
           <div className="flex items-center gap-1">
