@@ -38,9 +38,9 @@ export default function Navbar() {
       <a
         href="#"
         aria-label="ROXMOS home"
-        className="fixed left-4 top-4 z-50 flex h-12 items-center rounded-[14px] bg-[#0a0a0a]/90 px-5 font-display text-lg font-bold tracking-tight backdrop-blur-xl"
+        className="fixed left-4 top-5 z-50 flex h-9 items-center rounded-md bg-[rgba(30,32,40,0.55)] px-4 font-display text-base font-bold tracking-tight backdrop-blur-[44px]"
       >
-        ROX<span className="text-accent">MOS</span>
+        <span className="text-accent">ROXMOS</span>
       </a>
 
       {/* Get Started — top right (desktop only) */}
