@@ -25,10 +25,10 @@ export default function Approach() {
   return (
     <section id="approach" className="bg-paper text-ink">
       <div className="mx-auto w-full px-6 py-12 md:px-12 lg:mx-0 lg:w-[80%] lg:px-0 lg:py-16 lg:pl-16">
-        {/* section pill */}
-        <span className="inline-flex items-center rounded-full bg-ink/[0.06] px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-ink/70">
+        {/* section label */}
+        <p className="font-mono text-[11px] tracking-[0.3em] text-ink/40">
           APPROACH
-        </span>
+        </p>
 
         {/* big rounded card */}
         <div className="mt-6 rounded-[28px] bg-[#f1f3f8] p-6 md:p-8 lg:p-10">
@@ -53,11 +53,13 @@ export default function Approach() {
               <ul className="mt-6 flex flex-col gap-3">
                 {QUESTIONS.map((q) => (
                   <li key={q}>
-                    <div className="group flex items-center justify-between gap-4 rounded-2xl border border-transparent bg-white px-5 py-3 transition-colors duration-300 hover:border-primary/30">
-                      <span className="font-display text-sm font-semibold tracking-tight md:text-base">
+                    <div className="group flex items-center justify-between gap-4 rounded-2xl bg-white px-5 py-3">
+                      <span className="font-display text-sm font-semibold tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-1 md:text-base">
                         {q}
                       </span>
-                      <IconArrow className="h-4 w-4 shrink-0 text-ink/70 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink/[0.06] text-ink/70">
+                        <IconArrow className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5" />
+                      </span>
                     </div>
                   </li>
                 ))}
