@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactElement } from "react";
 import {
   motion,
   useInView,
@@ -32,7 +32,7 @@ import {
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SCRAMBLE = "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789#%&/<>*+=";
 
-type LineIcon = (props: { className?: string }) => JSX.Element;
+type LineIcon = (props: { className?: string }) => ReactElement;
 
 const SERVICES: {
   n: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactElement } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -42,7 +42,7 @@ function Word({
   );
 }
 
-const PRINCIPLES: { n: string; t: string; Icon: (props: { className?: string }) => JSX.Element }[] = [
+const PRINCIPLES: { n: string; t: string; Icon: (props: { className?: string }) => ReactElement }[] = [
   { n: "01", t: "We measure before we ship", Icon: IconMeasure },
   { n: "02", t: "Fewer people, deeper ownership", Icon: IconTeam },
   { n: "03", t: "Built to run, not to pitch", Icon: IconRun },
