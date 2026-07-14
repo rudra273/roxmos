@@ -1,4 +1,5 @@
 import About from "@/components/About";
+import Approach from "@/components/Approach";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Services from "@/components/Services";
@@ -15,13 +16,13 @@ export default function Home() {
       {/* Services — dark, Sui-style scroll reveal */}
       <Services />
 
-      {/* Products — dark */}
-      <section id="products" className="min-h-screen bg-ink" />
+      {/* Products — White */}
+      <section id="products" className="min-h-screen bg-paper" />
 
       {/* Approach — white */}
-      <section id="approach" className="min-h-screen bg-paper" />
+      <Approach />
 
-      {/* Work — white / grey */}
+      {/* Work — dark / grey */}
       <section id="work">
         <div className="h-[50vh] bg-paper" />
         <div className="h-[50vh] bg-[#e8ebf1]" />
