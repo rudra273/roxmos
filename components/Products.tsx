@@ -82,21 +82,21 @@ export default function Products() {
   });
 
   return (
-    <section id="products" className="relative overflow-clip text-white">
-      {/* ── Gradient backdrop — glows are pre-blurred radial
-             gradients (no filter), cheap to composite ── */}
+    <section id="products" className="relative overflow-clip">
+      {/* ── Gradient backdrop — light white→blue. Glows are
+             pre-blurred radial gradients (no filter). ── */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(180deg,#04060d_0%,#081226_32%,#0c1c40_68%,#060a18_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,#f8fbff_0%,#e9f1ff_30%,#d2e3ff_64%,#b7d2ff_100%)]"
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background: [
-            "radial-gradient(640px 640px at 4% 14%, rgba(77,162,255,0.22), transparent 70%)",
-            "radial-gradient(700px 700px at 98% 46%, rgba(124,108,255,0.18), transparent 70%)",
-            "radial-gradient(560px 560px at 38% 96%, rgba(130,190,255,0.13), transparent 70%)",
+            "radial-gradient(640px 640px at 4% 14%, rgba(77,162,255,0.28), transparent 70%)",
+            "radial-gradient(700px 700px at 98% 46%, rgba(124,108,255,0.20), transparent 70%)",
+            "radial-gradient(560px 560px at 38% 96%, rgba(130,190,255,0.22), transparent 70%)",
           ].join(","),
         }}
       />
@@ -109,7 +109,7 @@ export default function Products() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="font-mono text-[11px] tracking-[0.3em] text-glow/80"
+            className="font-mono text-[11px] tracking-[0.3em] text-primary"
           >
             PRODUCTS
           </motion.p>
@@ -118,7 +118,7 @@ export default function Products() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
-            className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl"
+            className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl"
           >
             Things we build, ship and run.
           </motion.h2>
@@ -130,7 +130,7 @@ export default function Products() {
             className="mt-5 flex items-center gap-3 pb-10 md:pb-16"
           >
             <span className="h-3 w-3 shrink-0 bg-primary" />
-            <span className="text-sm text-white/55 md:text-base">
+            <span className="text-sm text-ink/60 md:text-base">
               Four in-house products — keep scrolling, the deck stacks up.
             </span>
           </motion.div>
@@ -189,7 +189,7 @@ function ProductCard({
         scale: reduceMotion ? 1 : scale,
         transformOrigin: "top center",
       }}
-      className="glass sticky flex w-full flex-col overflow-hidden rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_24px_60px_-20px_rgba(0,0,0,0.6)]"
+      className="sticky flex w-full flex-col overflow-hidden rounded-lg border border-white/12 bg-[#0a1120]/70 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_30px_70px_-24px_rgba(12,28,64,0.55)] backdrop-blur-2xl backdrop-saturate-150"
     >
       {/* header — stays visible as the "row" when covered */}
       <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-8 md:py-5">
