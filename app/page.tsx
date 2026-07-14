@@ -1,6 +1,7 @@
 import About from "@/components/About";
 import Approach from "@/components/Approach";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Products from "@/components/Products";
@@ -34,8 +35,8 @@ export default function Home() {
       {/* Contact — dark, rises over Work */}
       <Contact />
 
-      {/* Footer — dark */}
-      <footer className="min-h-[40vh] bg-ink" />
+      {/* Footer — dark, nav links + full-width ROXMOS wordmark */}
+      <Footer />
     </main>
   );
 }
