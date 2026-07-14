@@ -17,6 +17,7 @@
 @theme inline {
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 /* ── Reusable glass surface ───────────────────────────── */
@@ -40,75 +41,111 @@ body {
   color: white;
 }
 
-/* ── Hero data-flow animation ─────────────────────────── */
-.df-pulse {
-  stroke-dasharray: 0.1 1;
-  stroke-dashoffset: 1.1;
-  animation: df-flow var(--dur, 6s) linear infinite;
-  animation-delay: var(--delay, 0s);
-  filter: drop-shadow(0 0 4px rgba(130, 190, 255, 0.7));
+/* ── Hero: living system blueprint ────────────────────────
+   One shared 12s production cycle. Each stage's "active"
+   window is a percentage slice of that cycle, so CSS glows
+   and SMIL pulses stay in sync without JS. */
+
+/* Stage activation windows (opacity of the blue overlay) */
+@keyframes bp-win-ingest {
+  0%, 8% { opacity: 0; }
+  10%, 20% { opacity: 1; }
+  24%, 100% { opacity: 0; }
+}
+@keyframes bp-win-train {
+  0%, 27% { opacity: 0; }
+  29%, 44% { opacity: 1; }
+  48%, 100% { opacity: 0; }
+}
+@keyframes bp-win-eval {
+  0%, 52% { opacity: 0; }
+  54%, 64% { opacity: 1; }
+  68%, 100% { opacity: 0; }
+}
+@keyframes bp-win-deploy {
+  0%, 72% { opacity: 0; }
+  74%, 96% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes bp-win-monitor {
+  0%, 87% { opacity: 0; }
+  89%, 99% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-.df-pulse-out {
-  stroke-dasharray: 0.18 1;
-  stroke-dashoffset: 1.18;
-  filter: drop-shadow(0 0 6px rgba(188, 220, 255, 0.9));
+/* DEPLOY "LIVE" pill never fully disappears — it dims */
+@keyframes bp-live {
+  0%, 72% { opacity: 0.18; }
+  74%, 96% { opacity: 1; }
+  100% { opacity: 0.18; }
 }
 
-@keyframes df-flow {
-  to {
-    stroke-dashoffset: 0;
-  }
+/* TRAIN progress bar fills during its window, then fades */
+@keyframes bp-bar {
+  0%, 29% { transform: scaleX(0); opacity: 0.9; }
+  44%, 46% { transform: scaleX(1); opacity: 0.9; }
+  52% { transform: scaleX(1); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 0; }
 }
 
-.df-core {
+/* Slow dash drift on the feedback / retrain loops */
+@keyframes bp-dash-drift {
+  to { stroke-dashoffset: -132; }
+}
+
+@keyframes bp-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* Scroll cue: small segment slides down a hairline track */
+@keyframes bp-cue {
+  0% { transform: translateY(-10px); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(12px); opacity: 0; }
+}
+
+.bp-win { opacity: 0; }
+.bp-win-ingest { animation: bp-win-ingest 12s linear infinite; }
+.bp-win-train { animation: bp-win-train 12s linear infinite; }
+.bp-win-eval { animation: bp-win-eval 12s linear infinite; }
+.bp-win-deploy { animation: bp-win-deploy 12s linear infinite; }
+.bp-win-monitor { animation: bp-win-monitor 12s linear infinite; }
+
+.bp-live-pill {
+  opacity: 0.18;
+  animation: bp-live 12s linear infinite;
+}
+
+.bp-bar-fill {
   transform-box: fill-box;
-  transform-origin: center;
-  animation: df-core-pulse 4s ease-in-out infinite;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: bp-bar 12s linear infinite;
 }
 
-@keyframes df-core-pulse {
-  0%,
-  100% {
-    opacity: 0.75;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-}
+.bp-drift { animation: bp-dash-drift 30s linear infinite; }
+.bp-blink { animation: bp-blink 1.2s steps(1) infinite; }
+.bp-cue-dot { animation: bp-cue 2.2s var(--ease-out-expo) infinite; }
 
-.df-ring {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: df-ring-expand 4s ease-out infinite;
-}
-
-@keyframes df-ring-expand {
-  0% {
-    transform: scale(0.4);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-}
+/* Static fallback — used when JS detects reduced motion */
+.bp-static .bp-anim { animation: none !important; }
+.bp-static .bp-win { opacity: 0.45; }
+.bp-static .bp-live-pill { opacity: 0.9; }
+.bp-static .bp-bar-fill { transform: scaleX(0.62); opacity: 0.9; }
+.bp-static .bp-pulse { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .df-pulse,
-  .df-core,
-  .df-ring {
-    animation: none;
+  .bp-anim {
+    animation: none !important;
   }
-
-  .df-pulse {
-    stroke-dasharray: none;
-    opacity: 0.15;
-  }
+  .bp-win { opacity: 0.45; }
+  .bp-live-pill { opacity: 0.9; }
+  .bp-bar-fill { transform: scaleX(0.62); opacity: 0.9; }
+  .bp-pulse { display: none; }
+  .bp-cue-dot { animation: none; opacity: 0.6; }
 }

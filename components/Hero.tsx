@@ -6,7 +6,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import DataFlow from "./DataFlow";
+import SystemBlueprint from "./SystemBlueprint";
 
 const LINE_1 = "Roxmos is an AI SaaS company based in India.";
 const LINE_2 = "Here we design AI systems and deliver services for our clients.";
@@ -17,66 +17,70 @@ export default function Hero() {
 
   // Hero content eases out as you scroll — contained to the hero
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 550], [1, 0]);
-  const scale = useTransform(scrollY, [0, 550], [1, 0.94]);
-  const y = useTransform(scrollY, [0, 550], [0, 70]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const y = useTransform(scrollY, [0, 500], [0, 60]);
 
   return (
-    <section className="relative flex h-[100svh] items-center justify-center overflow-hidden bg-ink">
-      {/* Soft ambient glow under the data-flow graphic */}
+    <section
+      id="hero"
+      className="relative overflow-hidden bg-ink lg:h-[90svh] lg:min-h-[648px]"
+    >
+      {/* Soft ambient glow behind the blueprint */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="absolute left-[62%] top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[140px]" />
+        <div className="absolute right-[-10%] top-1/2 h-[75vmin] w-[75vmin] -translate-y-1/2 rounded-full bg-primary/10 blur-[140px]" />
       </div>
 
-      {/* Data-flow streams — raw data converging into intelligence */}
-      <DataFlow />
-
-      {/* Content — intro line, top-left */}
       <motion.div
-        style={{ opacity, scale, y }}
-        className="absolute left-6 top-24 z-10 max-w-lg px-6 text-left md:left-16 md:top-28 lg:left-24"
+        style={{ opacity, y }}
+        className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-center gap-14 px-6 pb-16 pt-32 md:px-12 lg:grid lg:grid-cols-12 lg:items-center lg:gap-10 lg:px-16 lg:pb-0 lg:pt-0"
       >
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-          className="font-sans text-xl font-semibold leading-[1.3] tracking-tight md:text-2xl lg:text-3xl"
-        >
-          <span className="text-white">{LINE_1} </span>
-          <span className="text-white/50">{LINE_2}</span>
-        </motion.p>
-
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6, ease: EASE }}
-          className="mt-8 flex justify-start"
-        >
-          <a
-            href="#contact"
-            className="rounded-sm bg-primary px-8 py-3.5 text-sm font-semibold transition-all duration-300 hover:bg-accent hover:shadow-[0_0_35px_rgba(77,162,255,0.45)]"
+        {/* Statement + CTAs */}
+        <div className="lg:col-span-5">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
+            className="mt-6 max-w-xl font-display text-2xl font-semibold leading-[1.25] tracking-tight md:text-3xl xl:text-4xl"
           >
-            Discuss a project
-          </a>
-        </motion.div>
+            <span className="text-white">{LINE_1} </span>
+            <span className="text-white/45">{LINE_2}</span>
+          </motion.p>
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
+            className="mt-10 flex flex-wrap items-center gap-6"
+          >
+            <a
+              href="#contact"
+              className="rounded-sm bg-primary px-8 py-3.5 text-sm font-semibold transition-all duration-300 hover:bg-accent hover:shadow-[0_0_35px_rgba(77,162,255,0.45)]"
+            >
+              Discuss a project
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Living system blueprint */}
+        <div className="lg:col-span-7">
+          <SystemBlueprint />
+        </div>
       </motion.div>
 
-      {/* Scroll hint */}
+      {/* Scroll cue */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={reduceMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
-        style={{ opacity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ duration: 1, delay: 1.4, ease: EASE }}
+        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 lg:flex"
         aria-hidden
       >
-        <div className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5">
-          <motion.div
-            animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="h-2 w-1 rounded-full bg-glow"
-          />
-        </div>
+        <span className="font-mono text-[9px] tracking-[0.35em] text-white/30">
+          SCROLL
+        </span>
+        <span className="relative block h-8 w-px overflow-hidden bg-white/10">
+          <span className="bp-cue-dot absolute left-0 top-1/2 block h-3 w-px bg-glow" />
+        </span>
       </motion.div>
     </section>
   );
