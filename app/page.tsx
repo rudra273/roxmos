@@ -1,6 +1,7 @@
 import About from "@/components/About";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import Services from "@/components/Services";
 
 export default function Home() {
   return (
@@ -11,8 +12,8 @@ export default function Home() {
 
       <About />
 
-      {/* Services — dark */}
-      <section id="services" className="min-h-screen bg-ink" />
+      {/* Services — dark, Sui-style scroll reveal */}
+      <Services />
 
       {/* Products — dark */}
       <section id="products" className="min-h-screen bg-ink" />
