@@ -35,11 +35,11 @@ export default function Approach() {
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-16">
             {/* ── Left — heading + graphic ── */}
             <div className="flex flex-col">
-              <h2 className="max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl lg:text-[3.4rem]">
+              <h2 className="max-w-xl font-display text-3xl font-semibold leading-[1.05] tracking-tight md:text-4xl lg:text-[2.6rem]">
                 How We Turn an Ambiguous Problem into a Shipped System
               </h2>
 
-              <div className="mt-6 lg:mt-auto lg:pt-8">
+              <div className="mt-16 lg:mt-auto lg:pt-32">
                 <ApproachGraphic />
               </div>
             </div>
@@ -83,6 +83,7 @@ function ApproachGraphic() {
       {/* dashed connectors */}
       <svg
         viewBox="0 0 620 340"
+        preserveAspectRatio="none"
         className="absolute inset-0 h-full w-full text-ink/20"
         fill="none"
         stroke="currentColor"
