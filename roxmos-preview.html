@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ROXMOS — Hero + Navbar Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #04060d;
+    --primary: #2563eb;
+    --accent: #3b82f6;
+    --glow: #7aa8ff;
+    --paper: #f6f8fc;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-nav: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--ink); color: #fff; font-family: 'Inter', sans-serif; }
+  ::selection { background: var(--primary); }
+
+  /* ── Navbar (Lesse-style) ───────────── */
+  .logo-sq {
+    position: fixed; left: 16px; top: 16px; z-index: 50;
+    height: 48px; padding: 0 20px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.9); backdrop-filter: blur(20px);
+    font-family: 'Space Grotesk'; font-weight: 700; font-size: 18px;
+    letter-spacing: -0.02em; color: #fff; text-decoration: none;
+  }
+  .logo-sq span { color: var(--accent); }
+  .navwrap { position: fixed; inset: 16px auto auto 0; right: 0; z-index: 50; display: flex; justify-content: center; pointer-events: none; }
+  .bar {
+    pointer-events: auto;
+    width: min(660px, calc(100vw - 3rem));
+    height: 50px; overflow: hidden;
+    border-radius: 16px; padding: 8px;
+    background: rgba(30,32,40,0.55);
+    backdrop-filter: blur(44px);
+    -webkit-backdrop-filter: blur(44px);
+    transition: height .3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bar.open { height: 286px; }
+  .bar-row { display: flex; align-items: center; gap: 8px; }
+  .bar-link {
+    flex: 1; text-align: center; padding: 8px 0;
+    font-size: 13.5px; font-weight: 500; color: #fff; text-decoration: none;
+    border-radius: 9px; border: none; background: transparent; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background .2s;
+  }
+  .bar-link:hover, .bar-link.active { background: rgba(255,255,255,0.1); }
+  .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .svc-card {
+    position: relative; height: 110px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-radius: 14px; overflow: hidden; text-decoration: none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    transition: transform .2s;
+  }
+  .svc-card:active { transform: scale(0.98); }
+  .svc-card::before {
+    content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .3s;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(59,130,246,0.14), transparent 60%);
+  }
+  .svc-card:hover::before { opacity: 1; }
+  .svc-head { position: relative; display: flex; align-items: center; gap: 10px; }
+  .svc-head svg { color: var(--glow); flex: none; }
+  .svc-head h3 { font-size: 15px; font-weight: 500; color: #fff; }
+  .svc-head .meta { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.4); }
+  .svc-card .go { position: relative; font-size: 12px; color: rgba(255,255,255,0.35); transition: color .3s; }
+  .svc-card:hover .go { color: var(--glow); }
+  @media (max-width: 767px) { .navwrap { display: none; } }
+
+  /* ── Hero ───────────────────────────── */
+  .hero { position: relative; height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-glow {
+    position: absolute; left: 50%; top: 50%; width: 75vmin; height: 75vmin;
+    transform: translate(-50%,-50%); border-radius: 50%;
+    background: rgba(37,99,235,0.2); filter: blur(130px); pointer-events: none;
+  }
+  #net { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 24px; will-change: transform, opacity; }
+  .wordmark {
+    display: flex; flex-wrap: wrap; justify-content: center; column-gap: 0.28em;
+    max-width: 1000px; margin: 0 auto;
+    font-family: 'Space Grotesk'; font-weight: 700;
+    font-size: clamp(2.5rem, 7vw, 6rem); line-height: 1.05; letter-spacing: -0.03em;
+  }
+  .wordmark .mask { overflow: hidden; padding-bottom: 0.06em; }
+  .wordmark .letter {
+    display: inline-block;
+    background: linear-gradient(to bottom, #fff 55%, rgba(122,168,255,0.6));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    transform: translateY(115%);
+    animation: rise .9s var(--ease) forwards;
+  }
+  @keyframes rise { to { transform: translateY(0); } }
+  .tagline, .ctas { opacity: 0; transform: translateY(16px); animation: fade .7s var(--ease) forwards; }
+  .tagline { margin-top: 24px; color: rgba(255,255,255,0.6); font-size: 17px; animation-delay: .75s; }
+  .ctas { margin-top: 32px; display: flex; gap: 16px; justify-content: center; animation-delay: .9s; }
+  @keyframes fade { to { opacity: 1; transform: translateY(0); } }
+  .btn { font-size: 14px; font-weight: 600; padding: 12px 28px; border-radius: 999px; text-decoration: none; transition: all .3s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--accent); box-shadow: 0 0 35px rgba(59,130,246,0.45); }
+  .btn-glass { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); color: rgba(255,255,255,0.8); }
+  .btn-glass:hover { color: #fff; }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 36px; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
+    display: flex; justify-content: center; padding-top: 6px;
+    opacity: 0; animation: fade .8s 1.6s forwards;
+  }
+  .scroll-hint i { width: 4px; height: 8px; border-radius: 999px; background: var(--glow); animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(10px); } }
+
+  .placeholder { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--paper); color: var(--ink); }
+  .placeholder p { font-family: 'Space Grotesk'; font-size: 24px; opacity: 0.3; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wordmark .letter { transform: none; animation: none; }
+    .tagline, .ctas { opacity: 1; transform: none; animation: none; }
+    .scroll-hint i { animation: none; }
+    #net { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="logo-sq" href="#">ROX<span>MOS</span></a>
+
+<div class="navwrap">
+  <nav class="bar" id="bar">
+    <div class="bar-row">
+      <button class="bar-link" id="svcBtn">Services</button>
+      <a class="bar-link" href="#products">Products</a>
+      <a class="bar-link" href="#products">Approach</a>
+      <a class="bar-link" href="#products">Contact</a>
+    </div>
+    <div class="svc-grid">
+      <a class="svc-card" href="#products">
+        <div class="svc-head">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5 9.6 6.4 14.5 8 9.6 9.6 8 14.5 6.4 9.6 1.5 8 6.4 6.4 8 1.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <h3>AI SaaS Products</h3><span class="meta">/01</span>
+        </div>
+        <span class="go">Explore →</span>
+      </a>
+      <a class="svc-card" href="#products">
+        <div class="svc-head">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="m5.5 5-3 3 3 3M10.5 5l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Web Development</h3><span class="meta">/02</span>
+        </div>
+        <span class="go">Explore →</span>
+      </a>
+      <a class="svc-card" href="#products">
+        <div class="svc-head">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="4.5" y="1.75" width="7" height="12.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 12h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <h3>Mobile Development</h3><span class="meta">/03</span>
+        </div>
+        <span class="go">Explore →</span>
+      </a>
+      <a class="svc-card" href="#products">
+        <div class="svc-head">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 2.5 7 13.5l1.5-4.5L13 7.5 2.5 2.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <h3>User Experience Design</h3><span class="meta">/04</span>
+        </div>
+        <span class="go">Explore →</span>
+      </a>
+    </div>
+  </nav>
+</div>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <canvas id="net"></canvas>
+  <div class="hero-content" id="heroContent">
+    <h1 class="wordmark" aria-label="ROXMOS"></h1>
+    <p class="tagline">We build products. We deliver services. One team, end to end.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#contact">Discuss a project</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><i></i></div>
+</section>
+
+<section class="placeholder" id="products"><p>Products — coming next</p></section>
+
+<script>
+  // Demo heading — word-by-word stagger (placeholder copy)
+  const wm = document.querySelector('.wordmark');
+  'We build products that think.'.split(' ').forEach((word, i) => {
+    const mask = document.createElement('span'); mask.className = 'mask';
+    const l = document.createElement('span'); l.className = 'letter';
+    l.textContent = word; l.style.animationDelay = (0.15 + i * 0.09) + 's';
+    mask.appendChild(l); wm.appendChild(mask);
+  });
+
+  // Services dropdown: expand bar height (Lesse-style)
+  const bar = document.getElementById('bar');
+  const svcBtn = document.getElementById('svcBtn');
+  svcBtn.addEventListener('mouseenter', () => { bar.classList.add('open'); svcBtn.classList.add('active'); });
+  svcBtn.addEventListener('click', () => { bar.classList.toggle('open'); svcBtn.classList.toggle('active'); });
+  bar.addEventListener('mouseleave', () => { bar.classList.remove('open'); svcBtn.classList.remove('active'); });
+  bar.querySelectorAll('.bar-row a').forEach(a =>
+    a.addEventListener('mouseenter', () => { bar.classList.remove('open'); svcBtn.classList.remove('active'); }));
+
+  // Hero scroll fade
+  const heroContent = document.getElementById('heroContent');
+  addEventListener('scroll', () => {
+    const p = Math.min(scrollY / 550, 1);
+    heroContent.style.opacity = 1 - p;
+    heroContent.style.transform = `translateY(${p * 70}px) scale(${1 - p * 0.06})`;
+  }, { passive: true });
+
+  // Particle network (2D approximation of the R3F scene)
+  const canvas = document.getElementById('net');
+  const ctx = canvas.getContext('2d');
+  let W, H, pts = [];
+  const COUNT = innerWidth < 768 ? 60 : 130, LINK = 130;
+  let mouse = { x: 0, y: 0 };
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+  resize(); addEventListener('resize', resize);
+
+  for (let i = 0; i < COUNT; i++) {
+    pts.push({
+      x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+      vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
+      z: Math.random() // fake depth for parallax
+    });
+  }
+  addEventListener('mousemove', e => {
+    mouse.x = (e.clientX / innerWidth - .5);
+    mouse.y = (e.clientY / innerHeight - .5);
+  });
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.save(); ctx.scale(devicePixelRatio, devicePixelRatio);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > innerWidth) p.vx *= -1;
+      if (p.y < 0 || p.y > innerHeight) p.vy *= -1;
+      p.px = p.x + mouse.x * 30 * p.z; // parallax offset
+      p.py = p.y + mouse.y * 30 * p.z;
+    }
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].px - pts[j].px, dy = pts[i].py - pts[j].py;
+        const d = Math.hypot(dx, dy);
+        if (d < LINK) {
+          ctx.strokeStyle = `rgba(37,99,235,${0.22 * (1 - d / LINK)})`;
+          ctx.beginPath(); ctx.moveTo(pts[i].px, pts[i].py); ctx.lineTo(pts[j].px, pts[j].py); ctx.stroke();
+        }
+      }
+    }
+    ctx.fillStyle = 'rgba(122,168,255,0.85)';
+    for (const p of pts) { ctx.beginPath(); ctx.arc(p.px, p.py, 1.6, 0, 7); ctx.fill(); }
+    ctx.restore();
+    requestAnimationFrame(tick);
+  }
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) tick();
+</script>
+</body>
+</html>

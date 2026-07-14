@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ── ROXMOS design tokens ─────────────────────────────── */
+@theme {
+  /* Blue on dark + white */
+  --color-ink: #04060d; /* near-black base */
+  --color-surface: #0a0f1e; /* raised dark surface */
+  --color-primary: #4da2ff; /* key blue */
+  --color-accent: #62adff; /* lighter blue */
+  --color-glow: #82beff; /* particle / glow blue */
+  --color-paper: #f6f8fc; /* white sections */
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-nav: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@theme inline {
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+}
+
+/* ── Reusable glass surface ───────────────────────────── */
+@utility glass {
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink font-sans text-white antialiased;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ── Hero data-flow animation ─────────────────────────── */
+.df-pulse {
+  stroke-dasharray: 0.1 1;
+  stroke-dashoffset: 1.1;
+  animation: df-flow var(--dur, 6s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(0 0 4px rgba(130, 190, 255, 0.7));
+}
+
+.df-pulse-out {
+  stroke-dasharray: 0.18 1;
+  stroke-dashoffset: 1.18;
+  filter: drop-shadow(0 0 6px rgba(188, 220, 255, 0.9));
+}
+
+@keyframes df-flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.df-core {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: df-core-pulse 4s ease-in-out infinite;
+}
+
+@keyframes df-core-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+.df-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: df-ring-expand 4s ease-out infinite;
+}
+
+@keyframes df-ring-expand {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .df-pulse,
+  .df-core,
+  .df-ring {
+    animation: none;
+  }
+
+  .df-pulse {
+    stroke-dasharray: none;
+    opacity: 0.15;
+  }
+}
