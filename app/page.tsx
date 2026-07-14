@@ -2,6 +2,7 @@ import About from "@/components/About";
 import Approach from "@/components/Approach";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import Products from "@/components/Products";
 import Services from "@/components/Services";
 
 export default function Home() {
@@ -16,8 +17,8 @@ export default function Home() {
       {/* Services — dark, Sui-style scroll reveal */}
       <Services />
 
-      {/* Products — White */}
-      <section id="products" className="min-h-screen bg-paper" />
+      {/* Products — gradient, scroll-stacked glass deck */}
+      <Products />
 
       {/* Approach — white */}
       <Approach />

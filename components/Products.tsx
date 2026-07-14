@@ -1,0 +1,262 @@
+"use client";
+
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+
+/* ──────────────────────────────────────────────────────────
+   Products — scroll-stacked glass deck.
+
+   Each card is `position: sticky` and ~90% of the viewport.
+   Scrolling pins card N, then card N+1 slides up and over it.
+   Every card pins a little lower than the previous one
+   (STEP_REM), so once the whole deck is stacked the headers
+   of the earlier cards stay visible — the "rows" state.
+   Pinned cards also scale down slightly as they get covered.
+
+   Swap the `image` paths in PRODUCTS for real screenshots
+   (drop files into /public/products/).
+   ────────────────────────────────────────────────────────── */
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/* sticky-top of the first card, and how much lower each next
+   card pins (= the visible "row" height of a covered card) */
+const BASE_REM = 4.5;
+const STEP_REM = 3.25;
+
+const PRODUCTS: {
+  n: string;
+  name: string;
+  tagline: string;
+  tag: string;
+  image: string;
+  accent: string;
+}[] = [
+  {
+    n: "01",
+    name: "Orbit AI",
+    tagline: "AI copilots that plug into your operations and act.",
+    tag: "AI PLATFORM",
+    image: "/products/orbit-ai.svg",
+    accent: "#4da2ff",
+  },
+  {
+    n: "02",
+    name: "Vidyalaya",
+    tagline: "A modern learning platform for schools and academies.",
+    tag: "EDTECH",
+    image: "/products/vidyalaya.svg",
+    accent: "#a78bfa",
+  },
+  {
+    n: "03",
+    name: "Storely",
+    tagline: "Launch a full commerce storefront in days, not months.",
+    tag: "COMMERCE",
+    image: "/products/storely.svg",
+    accent: "#34d399",
+  },
+  {
+    n: "04",
+    name: "Daykit",
+    tagline: "Plan the day once — tasks, notes and habits in one kit.",
+    tag: "PRODUCTIVITY",
+    image: "/products/daykit.svg",
+    accent: "#fbbf24",
+  },
+];
+
+export default function Products() {
+  const reduceMotion = useReducedMotion() ?? false;
+  const deckRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: deckRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <section id="products" className="relative overflow-clip text-white">
+      {/* ── Gradient backdrop — glows are pre-blurred radial
+             gradients (no filter), cheap to composite ── */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[linear-gradient(180deg,#04060d_0%,#081226_32%,#0c1c40_68%,#060a18_100%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: [
+            "radial-gradient(640px 640px at 4% 14%, rgba(77,162,255,0.22), transparent 70%)",
+            "radial-gradient(700px 700px at 98% 46%, rgba(124,108,255,0.18), transparent 70%)",
+            "radial-gradient(560px 560px at 38% 96%, rgba(130,190,255,0.13), transparent 70%)",
+          ].join(","),
+        }}
+      />
+
+      <div className="relative">
+        {/* ── Heading ── */}
+        <div className="mx-auto max-w-[1200px] px-6 pt-24 md:px-12 lg:px-16 lg:pt-32">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="font-mono text-[11px] tracking-[0.3em] text-glow/80"
+          >
+            PRODUCTS
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
+            className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl"
+          >
+            Things we build, ship and run.
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
+            className="mt-5 flex items-center gap-3 pb-10 md:pb-16"
+          >
+            <span className="h-3 w-3 shrink-0 bg-primary" />
+            <span className="text-sm text-white/55 md:text-base">
+              Four in-house products — keep scrolling, the deck stacks up.
+            </span>
+          </motion.div>
+        </div>
+
+        {/* ── Sticky deck ── */}
+        <div
+          ref={deckRef}
+          className="relative mx-auto flex max-w-[1200px] flex-col items-stretch gap-8 px-4 pb-24 md:px-8"
+        >
+          {PRODUCTS.map((p, i) => (
+            <ProductCard
+              key={p.n}
+              product={p}
+              index={i}
+              total={PRODUCTS.length}
+              progress={scrollYProgress}
+              reduceMotion={reduceMotion}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── One sticky glass card ── */
+
+function ProductCard({
+  product,
+  index,
+  total,
+  progress,
+  reduceMotion,
+}: {
+  product: (typeof PRODUCTS)[number];
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  reduceMotion: boolean;
+}) {
+  const { n, name, tagline, tag, image, accent } = product;
+
+  /* cards behind shrink a touch as newer ones cover them */
+  const targetScale = 1 - (total - 1 - index) * 0.035;
+  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
+
+  const top = `${BASE_REM + index * STEP_REM}rem`;
+  const height = `calc(100svh - ${BASE_REM + 2 + index * STEP_REM}rem)`;
+
+  return (
+    <motion.article
+      style={{
+        top,
+        height,
+        scale: reduceMotion ? 1 : scale,
+        transformOrigin: "top center",
+      }}
+      className="glass sticky flex w-full flex-col overflow-hidden rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_24px_60px_-20px_rgba(0,0,0,0.6)]"
+    >
+      {/* header — stays visible as the "row" when covered */}
+      <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-8 md:py-5">
+        <div className="flex min-w-0 items-center gap-4">
+          <span
+            className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-md border font-mono text-xs sm:flex"
+            style={{ borderColor: `${accent}55`, color: accent }}
+          >
+            {n}
+          </span>
+          <h3 className="truncate font-display text-xl font-semibold tracking-tight md:text-3xl">
+            {name}
+          </h3>
+          <span className="hidden font-mono text-[10px] tracking-[0.25em] text-white/40 lg:inline">
+            {tag}
+          </span>
+        </div>
+
+        {/* buttons — top right */}
+        <div className="flex shrink-0 items-center gap-2.5">
+          <a
+            href="#contact"
+            className="hidden items-center rounded-md border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-medium text-white/80 transition-colors duration-200 hover:bg-white/12 hover:text-white sm:inline-flex"
+          >
+            Details
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-1.5 rounded-md bg-white px-4 py-2 text-[13px] font-semibold text-ink transition-colors duration-200 hover:bg-glow"
+          >
+            Visit
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-3.5 w-3.5"
+            >
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <p className="px-5 pb-4 text-sm text-white/55 md:px-8 md:text-base">
+        {tagline}
+      </p>
+
+      {/* main image */}
+      <div className="relative mx-4 mb-4 flex-1 overflow-hidden rounded-md border border-white/10 md:mx-6 md:mb-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image}
+          alt={`${name} product screenshot`}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* soft accent wash over the image bottom */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+          style={{
+            background: `linear-gradient(to top, ${accent}22, transparent)`,
+          }}
+        />
+      </div>
+    </motion.article>
+  );
+}

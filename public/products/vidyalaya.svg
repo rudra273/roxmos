@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120f2a"/>
+      <stop offset="1" stop-color="#241a4d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="300" cy="720" r="380" fill="#a78bfa" opacity="0.12"/>
+  <rect x="90" y="90" width="1420" height="150" rx="18" fill="#ffffff" opacity="0.05"/>
+  <rect x="140" y="140" width="260" height="18" rx="9" fill="#a78bfa" opacity="0.85"/>
+  <rect x="140" y="180" width="380" height="10" rx="5" fill="#ffffff" opacity="0.22"/>
+  <rect x="90" y="290" width="440" height="520" rx="18" fill="#ffffff" opacity="0.05"/>
+  <rect x="580" y="290" width="440" height="520" rx="18" fill="#a78bfa" opacity="0.13"/>
+  <rect x="1070" y="290" width="440" height="520" rx="18" fill="#ffffff" opacity="0.05"/>
+  <rect x="140" y="340" width="220" height="12" rx="6" fill="#ffffff" opacity="0.3"/>
+  <rect x="630" y="340" width="220" height="12" rx="6" fill="#ffffff" opacity="0.3"/>
+  <rect x="1120" y="340" width="220" height="12" rx="6" fill="#ffffff" opacity="0.3"/>
+  <rect x="140" y="380" width="340" height="200" rx="12" fill="#ffffff" opacity="0.06"/>
+  <rect x="630" y="380" width="340" height="200" rx="12" fill="#ffffff" opacity="0.08"/>
+  <rect x="1120" y="380" width="340" height="200" rx="12" fill="#ffffff" opacity="0.06"/>
+  <path d="M270 470 l40 40 70-80" fill="none" stroke="#c4b5fd" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="630" y="680" font-family="monospace" font-size="30" fill="#c4b5fd" letter-spacing="8">VIDYALAYA</text>
+  <rect x="630" y="720" width="300" height="10" rx="5" fill="#ffffff" opacity="0.2"/>
+</svg>
