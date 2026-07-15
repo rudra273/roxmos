@@ -169,17 +169,13 @@ export default function Footer() {
         {/* full-width ROXMOS — letters spread edge to edge */}
         <div className="flex w-full items-end justify-between px-4 pb-2 md:px-8 md:pb-4">
           {WORDMARK.map((letter, i) => (
-            <motion.span
+            <span
               key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.8, delay: i * 0.06, ease: EASE }}
               className="select-none font-display font-bold leading-[0.8] tracking-tight text-white/[0.06]"
               style={{ fontSize: "clamp(3rem, 17vw, 16rem)" }}
             >
               {letter}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
