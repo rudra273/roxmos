@@ -12,6 +12,10 @@
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-nav: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Corner radius scale — reuse across the site instead of one-off values */
+  --radius-tight: 4px; /* buttons, pills, small controls */
+  --radius-loose: 14px; /* cards, panels, larger surfaces */
 }
 
 @theme inline {

@@ -41,7 +41,7 @@ export default function DiscussProjectButton() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="fixed inset-x-0 bottom-6 z-40 mx-auto flex w-fit items-center gap-1.5 whitespace-nowrap rounded-[9px] bg-[rgba(30,32,40,0.4)] px-6 py-3 text-center text-[13px] font-medium text-white backdrop-blur-[44px] transition-colors duration-200 hover:bg-[rgba(30,32,40,0.6)]"
+          className="fixed inset-x-0 bottom-6 z-40 mx-auto flex w-fit items-center gap-1.5 whitespace-nowrap rounded-loose bg-[rgba(30,32,40,0.4)] px-6 py-3 text-center text-[13px] font-medium text-white backdrop-blur-[44px] transition-colors duration-200 hover:bg-[rgba(30,32,40,0.6)]"
         >
           Discuss a Project
           <svg

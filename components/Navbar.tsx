@@ -38,7 +38,7 @@ export default function Navbar() {
       <a
         href="#"
         aria-label="ROXMOS home"
-        className="fixed left-4 top-5 z-50 flex h-9 items-center rounded-md bg-[#04060d] px-4 font-display text-base font-bold tracking-tight"
+        className="fixed left-4 top-5 z-50 flex h-9 items-center rounded-tight bg-[#04060d] px-4 font-display text-base font-bold tracking-tight"
       >
         <span className="text-accent">ROX</span><span className="text-white">MOS</span>
       </a>
@@ -46,7 +46,7 @@ export default function Navbar() {
       {/* Get Started — top right (desktop only) */}
       <a
         href="#contact"
-        className="fixed right-4 top-5 z-50 hidden h-9 items-center rounded-md bg-primary px-5 text-[13.5px] font-semibold text-white transition-colors duration-200 hover:bg-accent md:flex"
+        className="fixed right-4 top-5 z-50 hidden h-9 items-center rounded-tight bg-primary px-5 text-[13.5px] font-semibold text-white transition-colors duration-200 hover:bg-accent md:flex"
       >
         Get Started
       </a>
@@ -58,14 +58,14 @@ export default function Navbar() {
           onMouseLeave={() => setServicesOpen(false)}
           animate={{ height: servicesOpen ? "auto" : 50 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="pointer-events-auto w-fit max-w-[calc(100vw-3rem)] overflow-hidden rounded-[16px] bg-[rgba(30,32,40,0.4)] p-2 backdrop-blur-[44px]"
+          className="pointer-events-auto w-fit max-w-[calc(100vw-3rem)] overflow-hidden rounded-loose bg-[rgba(30,32,40,0.4)] p-2 backdrop-blur-[44px]"
         >
           {/* Link row */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <button
               onMouseEnter={() => setServicesOpen(true)}
               onClick={() => setServicesOpen((v) => !v)}
-              className={`whitespace-nowrap rounded-[9px] px-3.5 py-2 text-center text-[12.5px] font-medium text-white transition-colors duration-200 ${
+              className={`whitespace-nowrap rounded-tight px-3.5 py-2 text-center text-[12.5px] font-medium text-white transition-colors duration-200 ${
                 servicesOpen ? "bg-white/10" : "hover:bg-white/10"
               }`}
             >
@@ -76,7 +76,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onMouseEnter={() => setServicesOpen(false)}
-                className="whitespace-nowrap rounded-[9px] px-3.5 py-2 text-center text-[12.5px] font-medium text-white transition-colors duration-200 hover:bg-white/10"
+                className="whitespace-nowrap rounded-tight px-3.5 py-2 text-center text-[12.5px] font-medium text-white transition-colors duration-200 hover:bg-white/10"
               >
                 {link.label}
               </a>
@@ -90,7 +90,7 @@ export default function Navbar() {
                 key={s.title}
                 href="#services"
                 onClick={() => setServicesOpen(false)}
-                className="group relative flex h-[110px] flex-col justify-between overflow-hidden rounded-[14px] bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-[18px] transition-transform duration-200 ease-out active:scale-[0.98]"
+                className="group relative flex h-[110px] flex-col justify-between overflow-hidden rounded-loose bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-[18px] transition-transform duration-200 ease-out active:scale-[0.98]"
               >
                 {/* hover sheen */}
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_0%,rgba(77,162,255,0.14),transparent_60%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -118,7 +118,7 @@ export default function Navbar() {
       <button
         onClick={() => setMobileOpen(true)}
         aria-label="Open menu"
-        className="fixed right-4 top-4 z-50 flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-[14px] bg-[#0a0a0a]/90 backdrop-blur-xl md:hidden"
+        className="fixed right-4 top-4 z-50 flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-tight bg-[#0a0a0a]/90 backdrop-blur-xl md:hidden"
       >
         <span className="h-px w-5 bg-white" />
         <span className="h-px w-5 bg-white" />
