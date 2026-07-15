@@ -1,6 +1,7 @@
 import About from "@/components/About";
 import Approach from "@/components/Approach";
 import Contact from "@/components/Contact";
+import DiscussProjectButton from "@/components/DiscussProjectButton";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
+      <DiscussProjectButton />
 
       <Hero />
 

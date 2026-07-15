@@ -55,7 +55,10 @@ const WORDMARK = "ROXMOS".split("");
 
 export default function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden border-t border-white/10 bg-ink">
+    <footer
+      id="footer"
+      className="relative w-full overflow-hidden border-t border-white/10 bg-ink"
+    >
       {/* blue ambience */}
       <div
         aria-hidden
