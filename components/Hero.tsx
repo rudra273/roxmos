@@ -8,8 +8,8 @@ import {
 } from "framer-motion";
 import SystemBlueprint from "./SystemBlueprint";
 
-const LINE_1 = "We design and build AI systems that work in production —";
-const LINE_2 = "for teams that want intelligence embedded in how they operate, not bolted on.";
+const LINE_1 = "AI that ships, not slideware.";
+const LINE_2 = "We partner with teams to turn ambitious ideas into AI products running in production.";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
@@ -34,13 +34,7 @@ export default function Hero() {
         style={{ opacity, y }}
         className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-center gap-14 px-6 pb-16 pt-32 md:px-12 lg:block lg:h-full lg:px-16 lg:pb-0 lg:pt-0"
       >
-        {/* Living system blueprint — wide, ~80% of the hero, so the
-            source chips push toward the left edge */}
-        <div className="lg:absolute lg:right-16 lg:top-1/2 lg:w-[60%] lg:max-w-[1240px] lg:-translate-y-[58%]">
-          <SystemBlueprint />
-        </div>
-
-        {/* Statement + CTAs — anchored bottom-left on desktop */}
+        {/* Statement + CTAs — below-center left on desktop; first on mobile */}
         <div className="lg:absolute lg:left-16 lg:right-16 lg:top-[50%]">
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
@@ -65,6 +59,11 @@ export default function Hero() {
               Discuss a project
             </a>
           </motion.div>
+        </div>
+
+        {/* Living system blueprint — right-anchored, ~60% of the hero */}
+        <div className="lg:absolute lg:right-16 lg:top-1/2 lg:w-[60%] lg:max-w-[1240px] lg:-translate-y-[58%]">
+          <SystemBlueprint />
         </div>
       </motion.div>
 
