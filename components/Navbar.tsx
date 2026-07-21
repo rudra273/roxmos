@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* ──────────────────────────────────────────────────────────
@@ -31,6 +31,27 @@ const EASE = [0.4, 0, 0.2, 1] as const;
 export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [servicesExpanded, setServicesExpanded] = useState(false);
+
+  // Collapse the mobile Services accordion whenever the menu closes.
+  useEffect(() => {
+    if (!mobileOpen) setServicesExpanded(false);
+  }, [mobileOpen]);
+
+  // Lock body scroll + close on Escape while the mobile overlay is open.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileOpen]);
 
   return (
     <>
@@ -114,14 +135,35 @@ export default function Navbar() {
         </motion.div>
       </nav>
 
-      {/* ── Mobile: burger (top-right) + fullscreen overlay ── */}
+      {/* ── Mobile: morphing 2-bar burger (top-right) + fullscreen overlay ── */}
       <button
-        onClick={() => setMobileOpen(true)}
-        aria-label="Open menu"
-        className="fixed right-4 top-4 z-50 flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-tight bg-[#0a0a0a]/90 backdrop-blur-xl md:hidden"
+        onClick={() => setMobileOpen((v) => !v)}
+        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        aria-expanded={mobileOpen}
+        className="fixed right-4 top-4 z-[70] flex h-12 w-12 items-center justify-center rounded-tight bg-[#0a0a0a]/90 backdrop-blur-xl md:hidden"
       >
-        <span className="h-px w-5 bg-white" />
-        <span className="h-px w-5 bg-white" />
+        <span className="relative block h-3 w-5">
+          <motion.span
+            className="absolute left-0 top-1/2 h-px w-5 bg-white"
+            initial={false}
+            animate={
+              mobileOpen
+                ? { y: 0, rotate: 45 }
+                : { y: -3, rotate: 0 }
+            }
+            transition={{ duration: 0.3, ease: EASE }}
+          />
+          <motion.span
+            className="absolute left-0 top-1/2 h-px w-5 bg-white"
+            initial={false}
+            animate={
+              mobileOpen
+                ? { y: 0, rotate: -45 }
+                : { y: 3, rotate: 0 }
+            }
+            transition={{ duration: 0.3, ease: EASE }}
+          />
+        </span>
       </button>
 
       <AnimatePresence>
@@ -133,52 +175,108 @@ export default function Navbar() {
             transition={{ duration: 0.35, ease: EASE }}
             className="fixed inset-0 z-[60] flex flex-col bg-ink/85 backdrop-blur-2xl md:hidden"
           >
-            <div className="flex items-center justify-between px-6 py-6">
+            <div className="flex items-center px-6 py-6">
               <span className="font-display text-lg font-bold">
                 ROX<span className="text-accent">MOS</span>
               </span>
-              <button
-                onClick={() => setMobileOpen(false)}
-                aria-label="Close menu"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-xl"
-              >
-                ×
-              </button>
             </div>
 
-            <nav className="flex flex-1 flex-col justify-center gap-2 px-8">
-              {[{ label: "Services", href: "#services" }, ...NAV_LINKS].map(
-                (link, i) => (
-                  <div key={link.href + link.label} className="overflow-hidden">
-                    <motion.a
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      initial={{ y: "110%" }}
-                      animate={{ y: 0 }}
-                      exit={{ y: "110%" }}
-                      transition={{
-                        duration: 0.55,
-                        delay: 0.08 + i * 0.07,
-                        ease: EASE,
-                      }}
-                      className="block font-display text-5xl font-bold tracking-tight text-white/90 transition-colors hover:text-accent"
+            <nav className="flex flex-1 flex-col px-8 pt-2">
+              {/* Services accordion — first item */}
+              <div className="overflow-hidden">
+                <motion.button
+                  onClick={() => setServicesExpanded((v) => !v)}
+                  aria-expanded={servicesExpanded}
+                  initial={{ y: "110%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "110%" }}
+                  transition={{ duration: 0.5, delay: 0.06, ease: EASE }}
+                  className="group flex w-full items-center justify-between border-b border-white/10 py-3.5 font-display text-xl font-medium tracking-tight text-white/85 transition-colors hover:text-accent"
+                >
+                  Services
+                  <motion.span
+                    animate={{ rotate: servicesExpanded ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: EASE }}
+                    className="text-white/30 transition-colors group-hover:text-accent"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      aria-hidden
                     >
-                      {link.label}
-                    </motion.a>
-                  </div>
-                ),
-              )}
+                      <path
+                        d="m4 6 4 4 4-4"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.span>
+                </motion.button>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {servicesExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                    className="overflow-hidden"
+                  >
+                    <div className="ml-1 border-l border-white/10 py-2 pl-4">
+                      {SERVICES.map((s) => (
+                        <a
+                          key={s.title}
+                          href="#services"
+                          onClick={() => setMobileOpen(false)}
+                          className="group flex items-center gap-3 py-2 transition-colors"
+                        >
+                          <span className="font-mono text-[11px] text-white/40">
+                            {s.meta}
+                          </span>
+                          <span className="text-sm text-white/70 transition-colors group-hover:text-accent">
+                            {s.title}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {NAV_LINKS.map((link, i) => (
+                <div key={link.href} className="overflow-hidden">
+                  <motion.a
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    initial={{ y: "110%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "110%" }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.12 + i * 0.06,
+                      ease: EASE,
+                    }}
+                    className="block border-b border-white/10 py-3.5 font-display text-xl font-medium tracking-tight text-white/85 transition-colors hover:text-accent"
+                  >
+                    {link.label}
+                  </motion.a>
+                </div>
+              ))}
             </nav>
 
             <div className="px-8 pb-10">
-              <p className="mb-3 text-xs uppercase tracking-wider text-white/30">
-                Services
-              </p>
-              <ul className="space-y-1.5 text-sm text-white/60">
-                {SERVICES.map((s) => (
-                  <li key={s.title}>{s.title}</li>
-                ))}
-              </ul>
+              <a
+                href="#contact"
+                onClick={() => setMobileOpen(false)}
+                className="flex h-11 items-center justify-center rounded-tight bg-primary text-[13.5px] font-semibold text-white transition-colors hover:bg-accent"
+              >
+                Get Started
+              </a>
             </div>
           </motion.div>
         )}
