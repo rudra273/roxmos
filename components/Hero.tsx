@@ -8,8 +8,8 @@ import {
 } from "framer-motion";
 import SystemBlueprint from "./SystemBlueprint";
 
-const LINE_1 = "Roxmos is an AI SaaS company based in India.";
-const LINE_2 = "Here we design AI systems and deliver services for our clients.";
+const LINE_1 = "We design and build AI systems that work in production —";
+const LINE_2 = "for teams that want intelligence embedded in how they operate, not bolted on.";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
@@ -40,7 +40,7 @@ export default function Hero() {
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
-            className="mt-6 max-w-xl font-display text-2xl font-semibold leading-[1.25] tracking-tight md:text-3xl xl:text-4xl"
+            className="mt-6 max-w-xl font-display text-xl font-semibold leading-[1.25] tracking-tight md:text-2xl xl:text-3xl"
           >
             <span className="text-white">{LINE_1} </span>
             <span className="text-white/45">{LINE_2}</span>
