@@ -32,15 +32,21 @@ export default function Hero() {
 
       <motion.div
         style={{ opacity, y }}
-        className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-center gap-14 px-6 pb-16 pt-32 md:px-12 lg:grid lg:grid-cols-12 lg:items-center lg:gap-10 lg:px-16 lg:pb-0 lg:pt-0"
+        className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-center gap-14 px-6 pb-16 pt-32 md:px-12 lg:block lg:h-full lg:px-16 lg:pb-0 lg:pt-0"
       >
-        {/* Statement + CTAs */}
-        <div className="lg:col-span-5">
+        {/* Living system blueprint — wide, ~80% of the hero, so the
+            source chips push toward the left edge */}
+        <div className="lg:absolute lg:right-16 lg:top-1/2 lg:w-[60%] lg:max-w-[1240px] lg:-translate-y-[58%]">
+          <SystemBlueprint />
+        </div>
+
+        {/* Statement + CTAs — anchored bottom-left on desktop */}
+        <div className="lg:absolute lg:left-16 lg:right-16 lg:top-[50%]">
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
-            className="mt-6 max-w-xl font-display text-xl font-semibold leading-[1.25] tracking-tight md:text-2xl xl:text-3xl"
+            className="mt-6 max-w-xl font-display text-xl font-semibold leading-[1.25] tracking-tight md:text-2xl xl:text-3xl lg:mt-0"
           >
             <span className="text-white">{LINE_1} </span>
             <span className="text-white/45">{LINE_2}</span>
@@ -50,7 +56,7 @@ export default function Hero() {
             initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-            className="mt-10 flex flex-wrap items-center gap-6"
+            className="mt-10 flex flex-wrap items-center gap-6 lg:mt-8"
           >
             <a
               href="#contact"
@@ -59,11 +65,6 @@ export default function Hero() {
               Discuss a project
             </a>
           </motion.div>
-        </div>
-
-        {/* Living system blueprint */}
-        <div className="lg:col-span-7">
-          <SystemBlueprint />
         </div>
       </motion.div>
 
