@@ -1,7 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
+
+import { PRODUCTS, type Product } from "@/lib/products";
 
 /* ──────────────────────────────────────────────────────────
    Products — scroll-stacked glass deck.
@@ -13,8 +16,8 @@ import { motion } from "framer-motion";
    of the earlier cards stay visible — the "rows" state.
    Pinned cards also scale down slightly as they get covered.
 
-   Swap the `image` paths in PRODUCTS for real screenshots
-   (drop files into /public/products/).
+   Product data (incl. detail-page content) lives in
+   @/lib/products. Each card links to /products/[slug].
    ────────────────────────────────────────────────────────── */
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -23,48 +26,6 @@ const EASE = [0.22, 1, 0.36, 1] as const;
    card pins (= the visible "row" height of a covered card) */
 const BASE_REM = 4.5;
 const STEP_REM = 3.25;
-
-const PRODUCTS: {
-  n: string;
-  name: string;
-  tagline: string;
-  tag: string;
-  image: string;
-  accent: string;
-}[] = [
-  {
-    n: "01",
-    name: "Orbit AI",
-    tagline: "AI copilots that plug into your operations and act.",
-    tag: "AI PLATFORM",
-    image: "/products/orbit-ai.svg",
-    accent: "#4da2ff",
-  },
-  {
-    n: "02",
-    name: "Vidyalaya",
-    tagline: "A modern learning platform for schools and academies.",
-    tag: "EDTECH",
-    image: "/products/vidyalaya.svg",
-    accent: "#a78bfa",
-  },
-  {
-    n: "03",
-    name: "Storely",
-    tagline: "Launch a full commerce storefront in days, not months.",
-    tag: "COMMERCE",
-    image: "/products/storely.svg",
-    accent: "#34d399",
-  },
-  {
-    n: "04",
-    name: "Daykit",
-    tagline: "Plan the day once — tasks, notes and habits in one kit.",
-    tag: "PRODUCTIVITY",
-    image: "/products/daykit.svg",
-    accent: "#fbbf24",
-  },
-];
 
 export default function Products() {
   const deckRef = useRef<HTMLDivElement>(null);
@@ -148,11 +109,11 @@ function ProductCard({
   index,
   total,
 }: {
-  product: (typeof PRODUCTS)[number];
+  product: Product;
   index: number;
   total: number;
 }) {
-  const { n, name, tagline, tag, image, accent } = product;
+  const { n, name, tagline, tag, image, accent, slug } = product;
 
   /* Each card pins a little lower than the previous one (the
      staggered `top`) so the earlier headers stay visible — that
@@ -188,14 +149,14 @@ function ProductCard({
 
         {/* buttons — top right */}
         <div className="flex shrink-0 items-center gap-2">
-          <a
-            href="#contact"
+          <Link
+            href={`/products/${slug}`}
             className="hidden items-center rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition-colors duration-200 hover:bg-white/12 hover:text-white sm:inline-flex"
           >
             Details
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href={`/products/${slug}`}
             className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-ink transition-colors duration-200 hover:bg-glow"
           >
             Visit
@@ -210,7 +171,7 @@ function ProductCard({
             >
               <path d="M7 17 17 7M9 7h8v8" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
 
