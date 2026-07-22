@@ -68,7 +68,7 @@ export default function About() {
             transition={{ duration: 0.7, ease: EASE }}
             className="font-mono text-[11px] tracking-[0.3em] text-ink/40"
           >
-            ABOUT ROXMOS
+            ABOUT
           </motion.p>
 
           <h2

@@ -125,7 +125,7 @@ export default function Work() {
             }}
           />
 
-          <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-10 px-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14 md:px-12">
+          <div className="relative mx-auto grid w-full max-w-[1440px] items-center gap-10 px-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14 md:px-12 lg:px-16">
             {/* ── Left: heading + swapping project text ── */}
             <div className="flex flex-col">
               <p className="font-mono text-[11px] tracking-[0.3em] text-primary">

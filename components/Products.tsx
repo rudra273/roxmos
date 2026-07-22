@@ -103,7 +103,7 @@ export default function Products() {
 
       <div className="relative">
         {/* ── Heading ── */}
-        <div className="mx-auto max-w-[1200px] px-6 pt-24 md:px-12 lg:px-16 lg:pt-32">
+        <div className="mx-auto max-w-[1440px] px-6 pt-24 md:px-12 lg:px-16 lg:pt-32">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function Products() {
         {/* ── Sticky deck ── */}
         <div
           ref={deckRef}
-          className="relative mx-auto flex max-w-[1200px] flex-col items-stretch gap-8 px-4 pb-24 md:px-8"
+          className="relative mx-auto flex max-w-[1440px] flex-col items-stretch gap-8 px-6 pb-24 md:px-12 lg:px-16"
         >
           {PRODUCTS.map((p, i) => (
             <ProductCard
