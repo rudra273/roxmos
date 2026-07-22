@@ -19,8 +19,12 @@ export default function DiscussProjectButton() {
     const heroObserver = new IntersectionObserver(
       ([entry]) => setHeroVisible(entry.isIntersecting),
     );
+    /* Hide the CTA as soon as the footer is even close to entering
+       the viewport (rootMargin pulls the trigger up by 240px), so the
+       button never overlaps the footer content. */
     const footerObserver = new IntersectionObserver(
       ([entry]) => setFooterVisible(entry.isIntersecting),
+      { rootMargin: "0px 0px 240px 0px" },
     );
 
     heroObserver.observe(hero);
