@@ -1,13 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 
 /* ──────────────────────────────────────────────────────────
    Products — scroll-stacked glass deck.
@@ -73,13 +67,7 @@ const PRODUCTS: {
 ];
 
 export default function Products() {
-  const reduceMotion = useReducedMotion() ?? false;
   const deckRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: deckRef,
-    offset: ["start start", "end end"],
-  });
 
   return (
     <section id="products" className="relative overflow-clip">
@@ -118,22 +106,10 @@ export default function Products() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
-            className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl"
+            className="mt-4 max-w-3xl pb-10 font-display text-3xl font-semibold leading-[1.05] tracking-tight text-ink md:pb-16 md:text-5xl"
           >
             Things we build, ship and run.
           </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
-            className="mt-5 flex items-center gap-3 pb-10 md:pb-16"
-          >
-            <span className="h-3 w-3 shrink-0 bg-primary" />
-            <span className="text-sm text-ink/60 md:text-base">
-              Four in-house products — keep scrolling, the deck stacks up.
-            </span>
-          </motion.div>
         </div>
 
         {/* ── Sticky deck ── */}
@@ -147,10 +123,18 @@ export default function Products() {
               product={p}
               index={i}
               total={PRODUCTS.length}
-              progress={scrollYProgress}
-              reduceMotion={reduceMotion}
             />
           ))}
+
+          {/* ── Pin hold ──
+               Extra scroll INSIDE the deck, after the cards. It extends
+               the deck's height so the last card (sticky) stays pinned
+               through this stretch — the deck freezes in place instead of
+               scrolling up. Approach pulls itself up over this same amount
+               (-mt-[100svh] z-10) and slides over the frozen deck like a
+               sheet. This height and Approach's -mt MUST match. Keep
+               Approach directly after Products in app/page.tsx. */}
+          <div aria-hidden className="pointer-events-none h-[100svh]" />
         </div>
       </div>
     </section>
@@ -163,44 +147,38 @@ function ProductCard({
   product,
   index,
   total,
-  progress,
-  reduceMotion,
 }: {
   product: (typeof PRODUCTS)[number];
   index: number;
   total: number;
-  progress: MotionValue<number>;
-  reduceMotion: boolean;
 }) {
   const { n, name, tagline, tag, image, accent } = product;
 
-  /* cards behind shrink a touch as newer ones cover them */
-  const targetScale = 1 - (total - 1 - index) * 0.035;
-  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
-
+  /* Each card pins a little lower than the previous one (the
+     staggered `top`) so the earlier headers stay visible — that
+     is the overlap effect. Every card gets the SAME height,
+     sized to the deepest card's offset, so the image area (the
+     flex-1 region below) is identical across all products and
+     no card ends up taller or shorter than the others. Width is
+     never scaled, so cards keep a constant width behind the deck. */
   const top = `${BASE_REM + index * STEP_REM}rem`;
-  const height = `calc(100svh - ${BASE_REM + 2 + index * STEP_REM}rem)`;
+  const height = `calc(100svh - ${BASE_REM + 2 + (total - 1) * STEP_REM}rem)`;
 
   return (
     <motion.article
-      style={{
-        top,
-        height,
-        scale: reduceMotion ? 1 : scale,
-        transformOrigin: "top center",
-      }}
+      style={{ top, height }}
       className="sticky flex w-full flex-col overflow-hidden rounded-lg border border-white/12 bg-[#0a1120]/70 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_30px_70px_-24px_rgba(12,28,64,0.55)] backdrop-blur-2xl backdrop-saturate-150"
     >
       {/* header — stays visible as the "row" when covered */}
-      <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-8 md:py-5">
-        <div className="flex min-w-0 items-center gap-4">
+      <div className="flex items-center justify-between gap-4 px-5 pt-3 pb-3 md:px-8 md:pt-3.5 md:pb-4">
+        <div className="flex min-w-0 items-center gap-3.5">
           <span
-            className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-md border font-mono text-xs sm:flex"
+            className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-md border font-mono text-[11px] sm:flex"
             style={{ borderColor: `${accent}55`, color: accent }}
           >
             {n}
           </span>
-          <h3 className="truncate font-display text-xl font-semibold tracking-tight md:text-3xl">
+          <h3 className="truncate font-display text-lg font-semibold tracking-tight md:text-2xl">
             {name}
           </h3>
           <span className="hidden font-mono text-[10px] tracking-[0.25em] text-white/40 lg:inline">
@@ -209,16 +187,16 @@ function ProductCard({
         </div>
 
         {/* buttons — top right */}
-        <div className="flex shrink-0 items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2">
           <a
             href="#contact"
-            className="hidden items-center rounded-md border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-medium text-white/80 transition-colors duration-200 hover:bg-white/12 hover:text-white sm:inline-flex"
+            className="hidden items-center rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition-colors duration-200 hover:bg-white/12 hover:text-white sm:inline-flex"
           >
             Details
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-1.5 rounded-md bg-white px-4 py-2 text-[13px] font-semibold text-ink transition-colors duration-200 hover:bg-glow"
+            className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-ink transition-colors duration-200 hover:bg-glow"
           >
             Visit
             <svg
@@ -228,7 +206,7 @@ function ProductCard({
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-3.5 w-3.5"
+              className="h-3 w-3"
             >
               <path d="M7 17 17 7M9 7h8v8" />
             </svg>

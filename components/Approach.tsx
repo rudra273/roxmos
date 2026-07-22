@@ -23,7 +23,7 @@ const QUESTIONS: string[] = [
 
 export default function Approach() {
   return (
-    <section id="approach" className="bg-paper text-ink">
+    <section id="approach" className="relative z-10 -mt-[100svh] bg-paper text-ink">
       <div className="mx-auto w-full px-6 py-12 md:px-12 lg:mx-0 lg:w-[80%] lg:px-0 lg:py-16 lg:pl-16">
         {/* section label */}
         <p className="font-mono text-[11px] tracking-[0.3em] text-ink/40">
