@@ -70,7 +70,7 @@ export default function Footer() {
       />
 
       {/* ── Upper: nav links ── */}
-      <div className="relative mx-auto max-w-[1400px] px-6 py-16 md:px-12 md:py-24">
+      <div className="relative mx-auto max-w-[1440px] px-6 py-16 md:px-12 md:py-24 lg:px-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_repeat(4,1fr)] md:gap-8">
           {/* Brand blurb */}
           <motion.div
@@ -143,7 +143,7 @@ export default function Footer() {
       {/* ── Lower: giant corner-to-corner wordmark ── */}
       <div className="relative w-full border-t border-white/10">
         {/* legal bar */}
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-4 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-12 lg:px-16">
           <p className="font-mono text-[11px] tracking-[0.2em] text-white/35">
             © {2026} ROXMOS — ALL RIGHTS RESERVED
           </p>
