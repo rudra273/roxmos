@@ -34,6 +34,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     features,
     highlights,
     gallery,
+    privacyPolicyPath,
   } = product;
 
   return (
@@ -116,6 +117,14 @@ export default function ProductDetail({ product }: { product: Product }) {
                 >
                   Back to products
                 </Link>
+                {privacyPolicyPath && (
+                  <Link
+                    href={privacyPolicyPath}
+                    className="inline-flex h-11 items-center px-2 text-[13.5px] font-medium text-white/55 underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
+                  >
+                    Privacy policy
+                  </Link>
+                )}
               </motion.div>
             </div>
           </div>

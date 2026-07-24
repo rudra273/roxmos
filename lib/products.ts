@@ -25,6 +25,8 @@ export type Product = {
   features: { title: string; desc: string }[];
   highlights: { label: string; value: string }[]; // stat tiles
   gallery: string[]; // screenshots (only one asset exists per product today)
+
+  privacyPolicyPath?: string; // set when a hosted privacy policy exists, e.g. "/products/daykit/privacy-policy"
 };
 
 export const PRODUCTS: Product[] = [
@@ -207,6 +209,7 @@ export const PRODUCTS: Product[] = [
       { label: "Rating", value: "4.9/5" },
     ],
     gallery: ["/products/daykit.svg"],
+    privacyPolicyPath: "/products/daykit/privacy-policy",
   },
 ];
 
